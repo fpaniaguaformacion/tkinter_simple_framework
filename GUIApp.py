@@ -61,7 +61,7 @@ class GUIApp:
     def init_menu(self):
         logging.debug("Entrando en init_menu")
         menubar = Menu(self.app)
-        menu_archivo = ("Archivo", (("Nuevo", self.prueba), ("Abrir",),
+        menu_archivo = ("Archivo", (("Nuevo", ), ("Abrir",),
             ("Guardar",), ("Cerrar",), None, ("Salir", self.exit)))
         menu_editar = ("Editar", (("Cortar",), ("Copiar",), ("Pegar",)))
         menu_ventanas = ("Peliculas", 
@@ -79,11 +79,10 @@ class GUIApp:
                     nuevo_menu.add_separator()
                 else:
                     if (len(opcion) == 1):
-                        nuevo_menu.add_command(label=opcion[0])
+                        nuevo_menu.add_command(label=opcion[0], state=DISABLED)
                     else:
                         nuevo_menu.add_command(
                             label=opcion[0], command=opcion[1])
-                        print(opcion[1])
             menubar.add_cascade(label=menu[0], menu=nuevo_menu)
 
     #Inicialización de las "pantallas" (Frames) de la aplicación
@@ -111,9 +110,6 @@ class GUIApp:
     def exit(self):
         logging.debug("Entrando en exit")
         sys.exit()
-
-    def prueba(self):
-        logging.debug("Entrando en prueba")
 
     def about(self):
         logging.debug("Entrando en About...")
