@@ -21,6 +21,7 @@ class GestorBBDD:
     def crear_esquema_normal(self):
         cursor = self.connection.cursor()
         sql = "CREATE TABLE IF NOT EXISTS peliculas (id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT NOT NULL, director TEXT NOT NULL, anyo INTEGER NOT NULL)"
+        sql = "CREATE TABLE IF NOT EXISTS generos (id INTEGER PRIMARY KEY AUTOINCREMENT, genero TEXT NOT NULL)"
         cursor.execute(sql)
         self.connection.commit()
         cursor.close()
@@ -43,7 +44,7 @@ class GestorBBDD:
         cursor = self.connection.cursor()
         sql = f"SELECT * FROM peliculas where id={id}"
         registro = cursor.execute(sql).fetchone()
-        pelicula = Pelicula(registro[0],registro[1],registro[2],registro[3],None)
+        pelicula = Pelicula(registro[0],registro[1],registro[2],registro[3])
         cursor.close()
         return pelicula
 
@@ -60,3 +61,19 @@ class GestorBBDD:
         cursor.execute(sql)
         self.connection.commit()
         cursor.close()
+
+    def getAllDirectors(self):
+        cursor = self.connection.cursor()
+        sql = "SELECT distinct(director) FROM peliculas ORDER BY director"
+        lista_directores = cursor.execute(sql).fetchall()
+        lista_directores = [director[0] for director in lista_directores]
+        cursor.close()
+        return lista_directores
+
+    def getAllGeneros(self):
+        cursor = self.connection.cursor()
+        sql = "SELECT genero FROM generos ORDER BY genero"
+        generos = cursor.execute(sql).fetchall()
+        generos = [genero[0] for genero in generos]
+        cursor.close()
+        return generos

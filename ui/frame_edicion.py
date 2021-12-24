@@ -52,29 +52,46 @@ class FrameEdicion(SuperFrame):
         self.table.bind("<Double-1>", self.edit)
         self.table.bind("<<TreeviewSelect>>", self.edit)
         
-        #Datos
+        #Id
         self.label_id = tk.Label(self, text="Id:", background=self.BG_COLOR)
         self.label_id.place(x=300,y=450)
         self.entry_id = tk.Entry(self, width=50, state="readonly")
         self.entry_id.place(x=390, y=450)
 
+        #Título
         self.label_titulo = tk.Label(self, text="Titulo:", background=self.BG_COLOR)
         self.label_titulo.place(x=300,y=480)
         self.entry_titulo = tk.Entry(self, width=50)
         self.entry_titulo.place(x=390, y=480)
 
-        self.label_director = tk.Label(self, text="Director:", background=self.BG_COLOR)
-        self.label_director.place(x=300,y=510)
-        self.entry_director = tk.Entry(self, width=50)
-        self.entry_director.place(x=390, y=510)
+        #Lista de géneros
+        self.label_genero = tk.Label(self, text="Género:", background=self.BG_COLOR)
+        self.label_genero.place(x=300, y=510)
+        generos = self.get_generos()
+        variable = tk.StringVar(self)
+        variable.set(generos[0])
+        self.menu_generos = tk.OptionMenu(self, variable, *generos)
+        self.menu_generos.config(width=12)
+        self.menu_generos.place(x=387, y=505)
+        self.label_advertencia = tk.Label(self, text="(solo para demostración)", background=self.BG_COLOR, foreground="red")
+        self.label_advertencia.place(x=510, y=510)
 
+
+        #Director
+        self.label_director = tk.Label(self, text="Director:", background=self.BG_COLOR)
+        self.label_director.place(x=300,y=540)
+        self.entry_director = tk.Entry(self, width=30)
+        self.entry_director.place(x=390, y=540)
+
+        #Año estreno
         self.label_anyo = tk.Label(self, text="Año estreno:", background=self.BG_COLOR)
-        self.label_anyo.place(x=300,y=540)
-        self.entry_anyo = tk.Entry(self, width=25)
-        self.entry_anyo.place(x=390, y=540)
+        self.label_anyo.place(x=300,y=570)
+        self.entry_anyo = tk.Entry(self, width=4, justify=tk.RIGHT)
+        self.entry_anyo.place(x=390, y=570)
+
 
     def reload(self):
-        print("Recargando...")
+        logging.debug("Inicializando componentes...")
         #Borramos la tabla
         self.table.clear_all()
         #Instanciamos el gestor de persistencia
@@ -119,7 +136,7 @@ class FrameEdicion(SuperFrame):
             titulo = self.entry_titulo.get()
             director = self.entry_director.get()
             anyo = int(self.entry_anyo.get())
-            pelicula = Pelicula(id, titulo, director, anyo, None)
+            pelicula = Pelicula(id, titulo, director, anyo)
             reply = tk.messagebox.askyesno(message="¿Está seguro de que desea modificar la película?", title="Aviso")
             if (reply==True):
                 gestor=GestorBBDD()
@@ -134,5 +151,11 @@ class FrameEdicion(SuperFrame):
         self.set_entry_text(self.entry_director, "")
         self.set_entry_text(self.entry_anyo, "")
 
+    def get_generos(self):
+        gestor = GestorBBDD()
+        generos = gestor.getAllGeneros()
+        return generos
+
     def create_pdf(self):
         logging.debug("Creando pdf...")
+        #TODO Implementar generador de PDF
