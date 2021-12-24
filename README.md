@@ -1,4 +1,4 @@
-# tkinter_simple_framework
+# Tkinter Simple Pseudo-framework
 
 Pseudo-framework para crear aplicaciones multiventana en Python con Tkinter.
 
