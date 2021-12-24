@@ -30,7 +30,7 @@ class FrameEdicion(SuperFrame):
         buttons = (
             ("Actualizar",self.reload,"icons/refresh.png"),
             ("Borrar",self.delete,"icons/delete.png"),
-            ("Save",self.save,"icons/save.png"),            
+            ("Guardar",self.save,"icons/save.png"),
             ("",self.create_pdf,"icons/pdf.png")
         ) 
         self.createToolbar(buttons, self.BUTTONS_WIDTH, self.BUTTONS_HEIGHT)
