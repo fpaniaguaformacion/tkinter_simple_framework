@@ -69,6 +69,9 @@ class SuperFrame(Frame):
     def __init__(self, parent, bg, width, height):
         Frame.__init__(self, parent, bg=self.BG_COLOR, width=width, height=height)
 
+        # Imágenes de los botones
+        self.buttons_images = []
+
     def createToolbar(self, buttons, width, height):
         i = 0
         for button in buttons:

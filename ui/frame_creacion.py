@@ -10,18 +10,17 @@ class FrameCreacion(SuperFrame):
     #Botones
     BUTTONS_WIDTH=100
     BUTTONS_HEIGHT=50
-    buttons_images=[]
     #Color de fondo
     BG_COLOR = None
 
     def __init__(self, parent, width, height):
-        SuperFrame.__init__(self, parent, bg=self.BG_COLOR, width=width, height=height)
+        SuperFrame.__init__(self, parent, bg=FrameCreacion.BG_COLOR, width=width, height=height)
 
         #Botones para la toolbar
         buttons = (
             ("Guardar",self.guardar,"icons/save.png"),
         ) 
-        self.createToolbar(buttons, self.BUTTONS_WIDTH, self.BUTTONS_HEIGHT)
+        self.createToolbar(buttons, FrameCreacion.BUTTONS_WIDTH, FrameCreacion.BUTTONS_HEIGHT)
         
         self.init_components()
 
@@ -31,13 +30,13 @@ class FrameCreacion(SuperFrame):
         logging.debug("Inicializando componentes...")
 
         #Título
-        self.label_titulo = tk.Label(self, text="Titulo:", background=self.BG_COLOR)
+        self.label_titulo = tk.Label(self, text="Titulo:", background=FrameCreacion.BG_COLOR)
         self.label_titulo.place(x=300,y=200)
         self.entry_titulo = tk.Entry(self, width=50)
         self.entry_titulo.place(x=390, y=200)
 
         #Lista de géneros
-        self.label_genero = tk.Label(self, text="Género:", background=self.BG_COLOR)
+        self.label_genero = tk.Label(self, text="Género:", background=FrameCreacion.BG_COLOR)
         self.label_genero.place(x=300, y=230)
         generos = self.get_generos()
         self.variable = tk.StringVar(self)
@@ -45,18 +44,18 @@ class FrameCreacion(SuperFrame):
         self.menu_generos = tk.OptionMenu(self, self.variable, *generos)
         self.menu_generos.config(width=12)
         self.menu_generos.place(x=387, y=225)
-        self.label_advertencia = tk.Label(self, text="(solo para demostración)", background=self.BG_COLOR,
+        self.label_advertencia = tk.Label(self, text="(solo para demostración)", background=FrameCreacion.BG_COLOR,
                                           foreground="red")
         self.label_advertencia.place(x=510, y=230)
 
         #Director
-        self.label_director = tk.Label(self, text="Director:", background=self.BG_COLOR)
+        self.label_director = tk.Label(self, text="Director:", background=FrameCreacion.BG_COLOR)
         self.label_director.place(x=300,y=260)
         self.entry_director = tk.Entry(self, width=30)
         self.entry_director.place(x=390, y=260)
 
         #Año de estreno
-        self.label_anyo = tk.Label(self, text="Año estreno:", background=self.BG_COLOR)
+        self.label_anyo = tk.Label(self, text="Año estreno:", background=FrameCreacion.BG_COLOR)
         self.label_anyo.place(x=300,y=290)
         self.entry_anyo = tk.Entry(self, width=4, justify=tk.RIGHT)
         self.entry_anyo.place(x=390, y=290)

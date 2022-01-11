@@ -4,13 +4,13 @@ import logging
 from model.pelicula import Pelicula
 
 class GestorBBDD:
-    # Atributos
+    # Atributos estáticos
     DATABASE_NAME = "./datos/bbdd_peliculas.db"
-    connection = None
 
     # Constructor
     def __init__(self):
-        self.connection = sqlite3.connect(self.DATABASE_NAME)
+        #Atributos
+        self.connection = sqlite3.connect(GestorBBDD.DATABASE_NAME)
         self.crear_esquema_normal()
 
     # Destructor

@@ -21,19 +21,19 @@ class GUIApp:
         self.init_window()
         self.init_menu()
         self.init_frames()
-        self.app.mainloop()
+        GUIApp.app.mainloop()
 
     # Lectura de la configuración de la APP
     def read_config(self):
-        if(not os.path.exists(self.CONFIG_FILE_NAME)):
+        if(not os.path.exists(GUIApp.CONFIG_FILE_NAME)):
             logging.debug("Creando fichero de configuración")
             self.create_default_config_file()
         logging.debug("Leyendo fichero de configuración")
-        with open(self.CONFIG_FILE_NAME,mode="r") as json_file:
+        with open(GUIApp.CONFIG_FILE_NAME,mode="r") as json_file:
             config = json.load(json_file)
-        self.app_title = config["APP_TITLE"]
-        self.window_width = int(config["WINDOW_WIDTH"])
-        self.window_height = int(config["WINDOW_HEIGHT"])
+        GUIApp.app_title = config["APP_TITLE"]
+        GUIApp.window_width = int(config["WINDOW_WIDTH"])
+        GUIApp.window_height = int(config["WINDOW_HEIGHT"])
 
     def create_default_config_file(self):
         config = {
@@ -41,26 +41,26 @@ class GUIApp:
             "WINDOW_WIDTH":1024,
             "WINDOW_HEIGHT":768
         }
-        with open(self.CONFIG_FILE_NAME,mode="w") as json_file:
+        with open(GUIApp.CONFIG_FILE_NAME,mode="w") as json_file:
             json.dump(config, json_file)
 
 
     # Construcción de la ventana
     def init_window(self):
         logging.debug("Entrando en create_window")
-        screen_width = self.app.winfo_screenwidth()
-        screen_height = self.app.winfo_screenheight()
-        OFFSET_X = int((screen_width - self.window_width) / 2)
-        OFFSET_Y = int((screen_height - self.window_height) / 2)
-        self.app.geometry(
-            f"{self.window_width}x{self.window_height}+{OFFSET_X}+{OFFSET_Y}")
-        self.app.resizable(False, False)
-        self.app.title(self.app_title)
+        screen_width = GUIApp.app.winfo_screenwidth()
+        screen_height = GUIApp.app.winfo_screenheight()
+        OFFSET_X = int((screen_width - GUIApp.window_width) / 2)
+        OFFSET_Y = int((screen_height - GUIApp.window_height) / 2)
+        GUIApp.app.geometry(
+            f"{GUIApp.window_width}x{GUIApp.window_height}+{OFFSET_X}+{OFFSET_Y}")
+        GUIApp.app.resizable(False, False)
+        GUIApp.app.title(GUIApp.app_title)
 
     # Construcción del menú
     def init_menu(self):
         logging.debug("Entrando en init_menu")
-        menubar = Menu(self.app)
+        menubar = Menu(GUIApp.app)
         menu_archivo = ("Archivo", (("Nuevo", ), ("Abrir",),
             ("Guardar",), ("Cerrar",), None, ("Salir", self.exit)))
         menu_editar = ("Editar", (("Cortar",), ("Copiar",), ("Pegar",)))
@@ -71,7 +71,7 @@ class GUIApp:
         ))
         menu_ayuda = ("Ayuda", (("Ayuda",), None, ("Acerca de...", self.about)))
         menus = (menu_archivo, menu_editar, menu_ventanas, menu_ayuda)
-        self.app.config(menu=menubar)
+        GUIApp.app.config(menu=menubar)
         for menu in menus:
             nuevo_menu = Menu(menubar, tearoff=0)
             for opcion in menu[1]:
@@ -88,16 +88,16 @@ class GUIApp:
     #Inicialización de las "pantallas" (Frames) de la aplicación
     def init_frames(self):
         logging.debug("Entrando en init_frames")
-        self.frames["FrameCreacion"]=FrameCreacion(self.app, self.window_width, self.window_height)
-        self.frames["FrameEdicion"]=FrameEdicion(self.app, self.window_width, self.window_height)
+        GUIApp.frames["FrameCreacion"]=FrameCreacion(GUIApp.app, GUIApp.window_width, GUIApp.window_height)
+        GUIApp.frames["FrameEdicion"]=FrameEdicion(GUIApp.app, GUIApp.window_width, GUIApp.window_height)
         self.mostrar_frame_edicion()
 
     #Cambio de Frame 
     def showFrame(self, frameName):
         logging.debug("Entrando en mostrarFrame")
-        for frame in self.frames.values():
+        for frame in GUIApp.frames.values():
             frame.pack_forget()
-        self.frames[frameName].pack()
+        GUIApp.frames[frameName].pack()
     
     def mostrar_frame_creacion(self):
         logging.debug("Entrando en mostrar_frame_creacion")

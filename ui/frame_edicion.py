@@ -11,21 +11,19 @@ class FrameEdicion(SuperFrame):
     #Botones
     BUTTONS_WIDTH=100
     BUTTONS_HEIGHT=50
-    buttons_images=[]
     #Tabla
     TABLE_WIDTH = 1000 #Ancho de la tabla
     TABLE_HEIGHT = 330 #Alto de la tabla
     ROWS_HEIGHT = 25 #Altura de cada fila
     VISIBLE_ROWS = int(TABLE_HEIGHT/ROWS_HEIGHT) #Número de filas visibles
-    
-    TABLE_X_POS = 10
-    TABLE_Y_POS = 80
-    ODD_ROW_COLOR = "#FFDA8A" 
-    EVEN_ROW_COLOR = "#FFF9EC"
+    TABLE_X_POS = 10 #Posición X
+    TABLE_Y_POS = 80 #Posición Y
+    ODD_ROW_COLOR = "#FFDA8A" #Color de las filas impares
+    EVEN_ROW_COLOR = "#FFF9EC" #Color de las filas pares
     #Color de fondo
     BG_COLOR = None
     def __init__(self, parent, width, height):
-        SuperFrame.__init__(self, parent, bg=self.BG_COLOR, width=width, height=height)
+        SuperFrame.__init__(self, parent, bg=FrameEdicion.BG_COLOR, width=width, height=height)
         #Botones para la toolbar
         buttons = (
             ("Actualizar",self.reload,"icons/refresh.png"),
@@ -33,7 +31,7 @@ class FrameEdicion(SuperFrame):
             ("Guardar",self.save,"icons/save.png"),
             ("",self.create_pdf,"icons/pdf.png")
         ) 
-        self.createToolbar(buttons, self.BUTTONS_WIDTH, self.BUTTONS_HEIGHT)
+        self.createToolbar(buttons, FrameEdicion.BUTTONS_WIDTH, FrameEdicion.BUTTONS_HEIGHT)
         self.init_components()
         self.pack()      
     
@@ -45,27 +43,27 @@ class FrameEdicion(SuperFrame):
 
         self.table = SimpleTable(self, 
             columns_ids=columns_ids, columns_names=columns_names, 
-            table_with=self.TABLE_WIDTH, visible_rows=self.VISIBLE_ROWS, rows_height=self.ROWS_HEIGHT,
-            odd_rows_bg_color=self.ODD_ROW_COLOR, even_rows_bg_color=self.EVEN_ROW_COLOR)
-        self.table.place(x=self.TABLE_X_POS, y=self.TABLE_Y_POS)
+            table_with=FrameEdicion.TABLE_WIDTH, visible_rows=FrameEdicion.VISIBLE_ROWS, rows_height=FrameEdicion.ROWS_HEIGHT,
+            odd_rows_bg_color=FrameEdicion.ODD_ROW_COLOR, even_rows_bg_color=FrameEdicion.EVEN_ROW_COLOR)
+        self.table.place(x=FrameEdicion.TABLE_X_POS, y=FrameEdicion.TABLE_Y_POS)
 
         self.table.bind("<Double-1>", self.edit)
         self.table.bind("<<TreeviewSelect>>", self.edit)
         
         #Id
-        self.label_id = tk.Label(self, text="Id:", background=self.BG_COLOR)
+        self.label_id = tk.Label(self, text="Id:", background=FrameEdicion.BG_COLOR)
         self.label_id.place(x=300,y=450)
         self.entry_id = tk.Entry(self, width=50, state="readonly")
         self.entry_id.place(x=390, y=450)
 
         #Título
-        self.label_titulo = tk.Label(self, text="Titulo:", background=self.BG_COLOR)
+        self.label_titulo = tk.Label(self, text="Titulo:", background=FrameEdicion.BG_COLOR)
         self.label_titulo.place(x=300,y=480)
         self.entry_titulo = tk.Entry(self, width=50)
         self.entry_titulo.place(x=390, y=480)
 
         #Lista de géneros
-        self.label_genero = tk.Label(self, text="Género:", background=self.BG_COLOR)
+        self.label_genero = tk.Label(self, text="Género:", background=FrameEdicion.BG_COLOR)
         self.label_genero.place(x=300, y=510)
         generos = self.get_generos()
         variable = tk.StringVar(self)
@@ -73,18 +71,18 @@ class FrameEdicion(SuperFrame):
         self.menu_generos = tk.OptionMenu(self, variable, *generos)
         self.menu_generos.config(width=12)
         self.menu_generos.place(x=387, y=505)
-        self.label_advertencia = tk.Label(self, text="(solo para demostración)", background=self.BG_COLOR, foreground="red")
+        self.label_advertencia = tk.Label(self, text="(solo para demostración)", background=FrameEdicion.BG_COLOR, foreground="red")
         self.label_advertencia.place(x=510, y=510)
 
 
         #Director
-        self.label_director = tk.Label(self, text="Director:", background=self.BG_COLOR)
+        self.label_director = tk.Label(self, text="Director:", background=FrameEdicion.BG_COLOR)
         self.label_director.place(x=300,y=540)
         self.entry_director = tk.Entry(self, width=30)
         self.entry_director.place(x=390, y=540)
 
         #Año estreno
-        self.label_anyo = tk.Label(self, text="Año estreno:", background=self.BG_COLOR)
+        self.label_anyo = tk.Label(self, text="Año estreno:", background=FrameEdicion.BG_COLOR)
         self.label_anyo.place(x=300,y=570)
         self.entry_anyo = tk.Entry(self, width=4, justify=tk.RIGHT)
         self.entry_anyo.place(x=390, y=570)
